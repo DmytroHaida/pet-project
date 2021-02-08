@@ -1,34 +1,76 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import CartContent from './CartContent'
-import shoppingCart from "../assets/image/shopping_cart.png"
+import shoppingCartImg from "../assets/image/shopping_cart.png"
 import trashIcon from "../assets/image/trash.png"
-import { useEffect } from 'react'
+import { ShoppingCartItemsIncrement, ShoppingCartItemsDecrement, ShoppingCartItemsDeleter, ClearShoppingCartItems } from '../redux/reducers/PizzaReducer'
+import { NavLink } from 'react-router-dom'
+
 const CartContainer = () => {
-    const cartItem = useSelector(state => state.pizzaItems.shoppingCart)
-    useEffect(()=>{
-        <CartContent/>
-    })
+    const shoppingCart = useSelector(state => state.pizzaItems.shoppingCart)
+    const dispatch = useDispatch()
+    const summaryItemsCount = () => {
+        let count = 0
+        shoppingCart.map(i=> count = count + i.count)
+        return count
+    }
+    const payAmount = () => {
+        let n = 0
+        shoppingCart.map(i=> n = n + i.total * i.count)
+        return n
+    }
+    const cutGoodsCount = (item) => {
+        dispatch(ShoppingCartItemsDecrement(item))
+    }
+    const addGoodsCount = (item) => {
+        dispatch(ShoppingCartItemsIncrement(item))
+    }
+    const a = (index) => {
+        dispatch(ShoppingCartItemsDeleter(index))
+    }
+    const clearCart = () => {
+        dispatch(ClearShoppingCartItems())
+    }
     return (
         <div className="shopping--cart">
             <div className="shopping--cart__top">
                 <div className="shopping--cart__tittle">
-                    <img src={shoppingCart} height="30px" alt="shoppingCart" />
+                    <img src={shoppingCartImg} height="30px" alt="shoppingCart" />
                     <h3>Корзина</h3>
                 </div>
-                <div className="shopping--cart__clear">
+                <div onClick={()=> clearCart()} className="shopping--cart__clear">
                     <img src={trashIcon} height="16px" alt="" />
                     <span>Очистити корзину</span>
                 </div>
             </div>
-            {cartItem.map(i =>
-                <CartContent
-                    key={Math.random(i.id)}
-                    name={i.tittleName}
-                    size={i.params.sizeSelected}
-                    params={i.params.paramsSelected}
-                    count={i.count}
-                    price={i.total}
+            <div>
+                {shoppingCart.map(i =>
+                    <CartContent
+                        key={i.name + i.size + i.params}
+                        name={i.name}
+                        size={i.size}
+                        params={i.params}
+                        count={i.count}
+                        price={i.total}
+                        id={i.id}
+                        index={shoppingCart.indexOf(i)}
+                        addGoodsCount={addGoodsCount}
+                        cutGoodsCount={cutGoodsCount}
+                        a={a}
                     />)}
+            </div>
+            <div className="shopping--cart__bottom">
+                <div className="shopping--cart__bottom-details">
+                    <span>Всього замовленно: {summaryItemsCount()} шт.</span>
+                    <span>Сума заказу: <b>{payAmount()} &#8372;</b></span>
+                </div>
+                <div className="shopping--cart__bottom-botton">
+                    <NavLink to="/La_Pizza">
+                        <button>Вернутись назад</button>
+                    </NavLink>
+                    <button onClick={()=> alert(`Ви замовили: ${summaryItemsCount()} шт. на суму ${payAmount()} Грн. ` )}>Оплатити</button>
+                </div>
+
+            </div>
         </div>
     )
 }

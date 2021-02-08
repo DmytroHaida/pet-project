@@ -1,5 +1,8 @@
 const SET_SHOPPING_CART_ITEMS = "SET_SHOPPING_CART_ITEMS"
 const SET_SHOPPING_CART_ITEMS_COUNT = "SET_SHOPPING_CART_ITEMS_COUNT"
+const SET_SHOPPING_CART_ITEMS_DECREMENT_COUNT = "SET_SHOPPING_CART_ITEMS_DECREMENT_COUNT"
+const SET_SHOPPING_CART_ITEMS_DELETER = "SET_SHOPPING_CART_ITEMS_DELETER"
+const SET_CLEAR_SHOPPING_CART_ITEMS = "SET_CLEAR_SHOPPING_CART_ITEMS"
 let initialState = {
     pizzaItems: [
         {
@@ -46,8 +49,8 @@ const PizzaReducer = (state = initialState, action) => {
                 ...state,
                 shoppingCart: state.shoppingCart.map(item => {
                     if (item.id === action.payloads.id
-                        && item.params.sizeSelected === action.payloads.params.sizeSelected
-                        && item.params.paramsSelected === action.payloads.params.paramsSelected
+                        && item.size === action.payloads.size
+                        && item.params === action.payloads.params
                         && item.id === action.payloads.id
                     ) {
                         let addCount = item
@@ -57,6 +60,33 @@ const PizzaReducer = (state = initialState, action) => {
 
                 })
             }
+        case SET_SHOPPING_CART_ITEMS_DECREMENT_COUNT: 
+        return {
+            ...state,
+            shoppingCart: state.shoppingCart.map(item => {
+                if (item.id === action.payloads.id
+                    && item.params === action.payloads.params
+                    && item.size === action.payloads.size
+                    && item.id === action.payloads.id
+                ) {
+                    let addCount = item
+                    addCount.count--
+                    return item
+                } else return item
+
+            })
+        }
+        case SET_SHOPPING_CART_ITEMS_DELETER:
+            state.shoppingCart.splice(action.payloads, 1)
+            return {
+                ...state, 
+                shoppingCart: [...state.shoppingCart]
+            }
+        case SET_CLEAR_SHOPPING_CART_ITEMS: 
+            return {
+                ...state, 
+                shoppingCart: action.payloads
+            }
         default:
             return state
     }
@@ -64,24 +94,38 @@ const PizzaReducer = (state = initialState, action) => {
 
 export const setShoppingCartItems = (payloads) => ({ type: SET_SHOPPING_CART_ITEMS, payloads })
 export const setShoppingCartItemsCount = (payloads) => ({ type: SET_SHOPPING_CART_ITEMS_COUNT, payloads })
-
+export const setShoppingCartItemsDecrementCount = (payloads) => ({ type: SET_SHOPPING_CART_ITEMS_DECREMENT_COUNT, payloads})
+export const setShoppingCartItemsDeleter = (payloads) => ( {type: SET_SHOPPING_CART_ITEMS_DELETER, payloads})
+export const setClearShoppingCartItems = (payloads) => ({type: SET_CLEAR_SHOPPING_CART_ITEMS, payloads})
 export const ShoppingCartItems = (item) => (dispatch, getState) => {
     const state = getState().pizzaItems.shoppingCart
     const matchedItem = state.find(i =>
-        i.params.paramsSelected === item.params.paramsSelected
-        && i.params.sizeSelected === item.params.sizeSelected
+        i.params === item.params
+        && i.size === item.size
         && i.id === item.id
     )
     const paramsSelectedMatched = state.some(i =>
-        i.params.paramsSelected === item.params.paramsSelected
-        && i.params.sizeSelected === item.params.sizeSelected
-        && i.id === item.id)
-
+        i.params === item.params
+        && i.size === item.size
+        && i.id === item.id
+        )
     if (!paramsSelectedMatched) {
         dispatch(setShoppingCartItems(item))
     } else {
         dispatch(setShoppingCartItemsCount(matchedItem))
     }
+}
+export const ShoppingCartItemsIncrement =(item) => (dispatch) => {
+    dispatch(setShoppingCartItemsCount(item))
+}
+export const ShoppingCartItemsDecrement = (item) => (dispatch) => {
+    dispatch(setShoppingCartItemsDecrementCount(item))
+}
+export const ShoppingCartItemsDeleter = (index) => (dispatch) => {
+    dispatch(setShoppingCartItemsDeleter(index))
+}
+export const ClearShoppingCartItems = () => (dispatch) => {
+    dispatch(setShoppingCartItems())
 }
 
 export default PizzaReducer;

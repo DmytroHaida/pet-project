@@ -6,14 +6,14 @@ import { useSelector } from "react-redux";
 function Header() {
     const cartItems = useSelector(state => state.pizzaItems.shoppingCart)
     let count = 0
-    for (let i = 0;i < cartItems.length; i++){
+    for (let i = 0; i < cartItems.length; i++) {
         count += cartItems[i].count
     }
-    
+
     return (
         <header className="container">
             <div className="header">
-                <NavLink to="/" className="header__logo">
+                <NavLink to="/La_Pizza" className="header__logo">
                     <img src={pizzalogo} width="110px" alt="Pizza logo" />
                     <div>
                         <h1>La Pizza</h1>
@@ -21,7 +21,7 @@ function Header() {
                     </div>
                 </NavLink>
                 <NavLink to="shopping_cart" className="header__cart">
-                    <img src={cartIcon} alt="cart icon"/>
+                    <img src={cartIcon} alt="cart icon" />
                     <span>{count}</span>
                 </NavLink>
             </div>

@@ -19,14 +19,13 @@
     font-weight: 600;
     font-size: 14px;
     text-transform: lowercase;
-    
+
     ul {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
         padding: 0;
         margin: 4px 0;
-        
     }
     li {
         list-style: none;
@@ -38,7 +37,6 @@
             cursor: pointer;
         }
     }
-    
 }
 .pizza-block__bottom {
     display: flex;
@@ -71,7 +69,6 @@
                 background-color: #ffffff;
                 color: #eb5b26;
             }
-            
         }
         span {
             padding: 0 6px;

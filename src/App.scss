@@ -1,7 +1,6 @@
-@import "./assets/style/normalize.scss";
 @import "./assets/style/header.scss";
 @import "./assets/style/PizzaBlock.scss";
-
+@import "./assets/style/normalize.scss";
 body {
     background-color: #ebebeb;
 }
@@ -141,4 +140,48 @@ body {
     .content {
         padding: 0 5px;
     }
-  }
+}
+.shopping--cart__bottom {
+   
+    
+}
+.shopping--cart__bottom-details {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    font-size: 22px;
+    font-family: sans-serif;
+    b {
+        color: #eb5b26;
+    }
+}
+.shopping--cart__bottom-botton {
+    display: flex;
+    justify-content: space-between;
+    button {
+        background-color: #ffffff;
+        outline: none;
+        padding: 10px 20px;
+        border: 1px solid #eb5b26;
+        border-radius: 25px;
+        font-weight: 16px;
+        font-weight: 900;
+        &:active {
+            transform: translateY(4px);
+        }
+        &:hover {
+            background-color: #eb5b26;
+            cursor: pointer;
+            span {
+                background-color: #ffffff;
+                color: #eb5b26;
+            }
+        }
+        span {
+            padding: 0 6px;
+            border-radius: 100px;
+            background-color: #eb5b26;
+            color: #ffffff;
+        }
+    }
+}
