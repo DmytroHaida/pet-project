@@ -8,6 +8,7 @@ function App() {
 			<div className="App">
 				<Header />
 				<Content />
+				<div className="footer">React PIZZA ©2021</div>
 			</div>
 		</BrowserRouter>
 	);

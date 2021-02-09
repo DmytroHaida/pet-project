@@ -17,6 +17,7 @@ const GoodsTileContainer = () => {
                     name={i.name}
                     price={i.price}
                     size={i.size}
+                    image={i.image}
                     params={i.dough}
                     shoppingCart={shoppingCart}
                     addToCart={addToCart}

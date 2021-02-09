@@ -9,7 +9,6 @@ function Header() {
     for (let i = 0; i < cartItems.length; i++) {
         count += cartItems[i].count
     }
-
     return (
         <header className="container">
             <div className="header">

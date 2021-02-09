@@ -1,9 +1,6 @@
-import pizza from "../assets/image/pizza/pizza_0009_sloj3-300x300.jpg"
 import { useState } from "react";
-
-
 const GoodsTile = (props) => {
-    const { id, name, price, size, params, shoppingCart, addToCart } = props;
+    const { id, name, price, size, params, shoppingCart, addToCart,image } = props;
     const [paramsSelected, setParamsSelector] = useState(params[0]);
     const [sizeSelected, setSizeSelector] = useState(size[0]);
     const [total, setTotal] = useState(price[0]);
@@ -15,6 +12,7 @@ const GoodsTile = (props) => {
     const addItem = () => {
         let item = {
             name: name,
+            image: image,
             total: total,
             params: paramsSelected,
             size: sizeSelected, 
@@ -31,7 +29,7 @@ const GoodsTile = (props) => {
     return (
         <>
             <div className="pizza-block" key={id}>
-                <img src={pizza} width="auto" alt="pizza" />
+                <img src={image} width="250px" alt="pizza" />
                 <h4 className="pizza-block__tittle">{name}</h4>
                 <div className="pizza-block__selector">
                     <ul>
@@ -46,7 +44,7 @@ const GoodsTile = (props) => {
                 </div>
                 <div className="pizza-block__bottom">
                     <p>{total} &#8372;</p>
-                    <button onClick={() => addItem()}>
+                    <button className="button" onClick={() => addItem()}>
                         +  Додати
                         {shoppingCart.some(i => i.id === id) === true ? <span>{count}</span> : null}
                     </button>
