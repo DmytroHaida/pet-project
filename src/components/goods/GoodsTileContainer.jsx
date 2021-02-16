@@ -1,4 +1,4 @@
-import GoodsTile from "../GoodsTile"
+import GoodsTile from "./GoodsTile"
 import { useSelector, useDispatch } from 'react-redux'
 import { ShoppingCartItems } from '../../redux/reducers/PizzaReducer'
 const GoodsTileContainer = () => {

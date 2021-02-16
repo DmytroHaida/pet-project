@@ -10,7 +10,9 @@
 .header__logo {
     display: flex;
     text-decoration: none;
+    align-items: center;
     color: #000000;
+    max-width: 250px;
     p {
         margin: 0;
         font-size: 12px;
@@ -18,10 +20,10 @@
     span {
         font-weight: bold;
         font-size: 14px;
-        color: #eb5b26;
+        color: var(--my-theme-color);
     }
     h1 {
-        margin: 0;
+        margin: 1px 0 0 0;
     }
 }
 .header__cart {
@@ -30,11 +32,11 @@
         position: relative;
         top: -32px;
         left: -17px;
-        background-color: #eb5b26;
+        background-color: var(--my-theme-color);
         border-radius: 100px;
         padding: 3px 7px;
         font-weight: bold;
         font-size: 14px;
-        color: white;
+        color: var(--my-theme-second-color);
     }
 }

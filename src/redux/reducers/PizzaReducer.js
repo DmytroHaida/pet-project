@@ -143,6 +143,7 @@ export const setShoppingCartItemsCount = (payloads) => ({ type: SET_SHOPPING_CAR
 export const setShoppingCartItemsDecrementCount = (payloads) => ({ type: SET_SHOPPING_CART_ITEMS_DECREMENT_COUNT, payloads })
 export const setShoppingCartItemsDeleter = (payloads) => ({ type: SET_SHOPPING_CART_ITEMS_DELETER, payloads })
 export const setClearShoppingCartItems = (payloads) => ({ type: SET_CLEAR_SHOPPING_CART_ITEMS, payloads })
+
 export const ShoppingCartItems = (item) => (dispatch, getState) => {
     const state = getState().pizzaItems.shoppingCart
     const matchedItem = state.find(i =>
