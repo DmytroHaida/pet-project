@@ -4,11 +4,9 @@ import GoodsTileContainer from './goods/GoodsTileContainer';
 function Content() {
     return (
         <div className="container">
-            <div className="content">
                 <Route path="/La_Pizza" render={() => <GoodsTileContainer />} />
-                <Route path="/shopping_cart" render={() => <CartContainer />} />
+                <Route path="/shopping_cart" render={() => <CartContainer className="content" />} />
                 <Redirect from='/' to='/La_Pizza' />
-            </div>
         </div>
     )
 }

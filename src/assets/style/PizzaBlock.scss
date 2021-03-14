@@ -1,18 +1,18 @@
-.pizza-block {
+.goods-block {
     max-width: 300px;
     padding: 5px;
     .active {
         background-color: #ffffff;
     }
 }
-.pizza-block__tittle {
+.goods-block__tittle {
     margin: 0 0 5px 0;
     text-align: center;
     font-size: 22px;
     font-weight: 900;
     text-transform: capitalize;
 }
-.pizza-block__selector {
+.goods-block__selector {
     background-color: #ebebeb;
     border-radius: 10px;
     padding: 6px;
@@ -38,7 +38,7 @@
         }
     }
 }
-.pizza-block__bottom {
+.goods-block__bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;

@@ -4,6 +4,9 @@ const GoodsTile = (props) => {
     const [paramsSelected, setParamsSelector] = useState(params[0]);
     const [sizeSelected, setSizeSelector] = useState(size[0]);
     const [itemPrice, setItemPrice] = useState(price[0]);
+    const arrForSumCount = shoppingCart.filter(i => i.id === id)
+    let count = 0
+debugger
     const sizeSelector = (e) => {
         setSizeSelector(e)
         let index = size.findIndex(i => i === e)
@@ -21,33 +24,31 @@ const GoodsTile = (props) => {
         }
         addToCart(item)
     }
-    let arrForSumCount = shoppingCart.filter(i => i.id === id)
-    let count = 0
-    for (let i = 0; i < arrForSumCount.length; i++) {
-        count += arrForSumCount[i].count
-    }
+    arrForSumCount.forEach(element => { 
+        count += element.count
+    });
     return (
         <>
-            <div className="pizza-block" key={id}>
-                <img src={image} width="250px" alt="pizza" />
-                <h4 className="pizza-block__tittle">{name}</h4>
-                <div className="pizza-block__selector">
+            <div className="goods-block" key={id}>
+                <img src={image} width="250px" alt={name} />
+                <h4 className="goods-block__tittle">{name}</h4>
+                <div className="goods-block__selector">
                     <ul>
-                        {params.map(p =>
-                            <li className={paramsSelected === p ? "active" : null}
-                                onClick={() => { setParamsSelector(p) }} key={id + p}>
-                                {p}
+                        {params.map(el =>
+                            <li className={paramsSelected === el ? "active" : null}
+                                onClick={() => { setParamsSelector(el) }} key={id + el}>
+                                {el}
                             </li>)}
                     </ul>
                     <ul>
-                        {size.map(s =>
-                            <li className={sizeSelected === s ? "active" : null}
-                                onClick={() => { sizeSelector(s) }} key={id + s}>
-                                {s}
+                        {size.map(el =>
+                            <li className={sizeSelected === el ? "active" : null}
+                                onClick={() => { sizeSelector(el) }} key={id + el}>
+                                {el}
                             </li>)}
                     </ul>
                 </div>
-                <div className="pizza-block__bottom">
+                <div className="goods-block__bottom">
                     <p>{itemPrice} &#8372;</p>
                     <button className="my-button" onClick={() => addItem()}>
                         +  Додати

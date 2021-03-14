@@ -35,62 +35,64 @@ const CartContainer = () => {
         dispatch(ClearShoppingCartItems())
     }
     return (
-        <div className="shopping--cart">
-            { shoppingCart.length > 0
-                ? <div className="shopping--cart__top">
-                    <div className="shopping--cart__tittle">
-                        <img src={shoppingCartImg} height="30px" alt="shoppingCart" />
-                        <h3>Корзина</h3>
+        <div className="content">
+            <div className="shopping--cart">
+                {shoppingCart.length > 0
+                    ? <div className="shopping--cart__top">
+                        <div className="shopping--cart__tittle">
+                            <img src={shoppingCartImg} height="30px" alt="shoppingCart" />
+                            <h3>Корзина</h3>
+                        </div>
+                        <div onClick={() => clearCart()} className="shopping--cart__clear">
+                            <img src={trashIcon} height="16px" alt="trashIcon" />
+                            <span>Очистити корзину</span>
+                        </div>
                     </div>
-                    <div onClick={() => clearCart()} className="shopping--cart__clear">
-                        <img src={trashIcon} height="16px" alt="trashIcon" />
-                        <span>Очистити корзину</span>
-                    </div>
-                </div>
-                : null
-            }
-            {shoppingCart.length > 0 ? shoppingCart.map(i =>
-                <CartContent
-                    key={i.name + i.size + i.params}
-                    name={i.name}
-                    size={i.size}
-                    params={i.params}
-                    count={i.count}
-                    price={i.price}
-                    image={i.image}
-                    id={i.id}
-                    index={shoppingCart.indexOf(i)}
-                    addGoodsCount={addGoodsCount}
-                    decreaseGoodsCount={decreaseGoodsCount}
-                    cartItemDeleter={cartItemDeleter}
-                />)
-                : <CartNoGoods />
-            }
-            { shoppingCart.length > 0 ?
-                <div>
-                    <div className="shopping--cart__bottom-details">
-                        <span>Всього замовленно:
+                    : null
+                }
+                {shoppingCart.length > 0 ? shoppingCart.map(i =>
+                    <CartContent
+                        key={i.name + i.size + i.params}
+                        name={i.name}
+                        size={i.size}
+                        params={i.params}
+                        count={i.count}
+                        price={i.price}
+                        image={i.image}
+                        id={i.id}
+                        index={shoppingCart.indexOf(i)}
+                        addGoodsCount={addGoodsCount}
+                        decreaseGoodsCount={decreaseGoodsCount}
+                        cartItemDeleter={cartItemDeleter}
+                    />)
+                    : <CartNoGoods />
+                }
+                {shoppingCart.length > 0 ?
+                    <div>
+                        <div className="shopping--cart__bottom-details">
+                            <span>Всього замовленно:
                             <b> {summaryItemsCount()}</b> шт.
                         </span>
-                        <span>Сума заказу:
+                            <span>Сума заказу:
                             <b>{payAmount()} &#8372;</b>
-                        </span>
+                            </span>
+                        </div>
+                        <div className="shopping--cart__bottom">
+                            <NavLink to="/La_Pizza">
+                                <button className="my-button button-variant-black">Вернутись назад</button>
+                            </NavLink>
+                            <button className="my-button"
+                                onClick={() => alert(`Ви замовили: ${summaryItemsCount()} шт. на суму ${payAmount()} Грн. `)}>
+                                Оплатити
+                        </button>
+                        </div>
                     </div>
-                    <div className="shopping--cart__bottom">
+                    : <div className="shopping--cart__bottom-empty">
                         <NavLink to="/La_Pizza">
                             <button className="my-button button-variant-black">Вернутись назад</button>
                         </NavLink>
-                        <button className="my-button"
-                            onClick={() => alert(`Ви замовили: ${summaryItemsCount()} шт. на суму ${payAmount()} Грн. `)}>
-                            Оплатити
-                        </button>
-                    </div>
-                </div>
-                : <div className="shopping--cart__bottom-empty">
-                    <NavLink to="/La_Pizza">
-                        <button className="my-button button-variant-black">Вернутись назад</button>
-                    </NavLink>
-                </div>}
+                    </div>}
+            </div>
         </div>
     )
 }

@@ -31,7 +31,6 @@ body {
     padding: 10px 20px;
     border: 1px solid var(--my-theme-color);
     border-radius: 25px;
-    font-weight: 16px;
     font-weight: 700;
     color: var(--my-theme-color);
     &:active {
@@ -61,6 +60,15 @@ body {
     &:hover {
         background-color: #444;
         border-color: #444;
+    }
+}
+.navigation-bar{
+    text-align: end;
+    margin-right: 30px;
+    select {
+        padding: 6px 12px;
+        border-radius: 4px;
+        outline: none;
     }
 }
 .footer {

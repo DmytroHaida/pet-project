@@ -12,13 +12,14 @@ const SET_SHOPPING_CART_ITEMS_COUNT = "SET_SHOPPING_CART_ITEMS_COUNT"
 const SET_SHOPPING_CART_ITEMS_DECREMENT_COUNT = "SET_SHOPPING_CART_ITEMS_DECREMENT_COUNT"
 const SET_SHOPPING_CART_ITEMS_DELETER = "SET_SHOPPING_CART_ITEMS_DELETER"
 const SET_CLEAR_SHOPPING_CART_ITEMS = "SET_CLEAR_SHOPPING_CART_ITEMS"
+const SET_GOODS_IS_FETCHING = "SET_GOODS_IS_FETCHING"
 let initialState = {
     pizzaItems: [
         {
             name: "ВІННІ ПУХ",
             size: ["20см", "30см", "50см"],
             price: [67, 80, 110],
-            dough: ["Тонке", "Традиційне"],
+            params: ["Тонке", "Традиційне"],
             image: vinniPuh,
             id: 1
         },
@@ -26,7 +27,7 @@ let initialState = {
             name: "ФРУТІ ДІ МАРЕ",
             size: ["20см", "30см", "50см"],
             price: [209, 260, 335],
-            dough: ["Тонке", "Традиційне"],
+            params: ["Тонке", "Традиційне"],
             image: frutyDyMare,
             id: 2
         },
@@ -34,7 +35,7 @@ let initialState = {
             name: "ПОДВІЙНА ПЕПЕРОНІ",
             size: ["20см", "30см", "50см"],
             price: [127, 160, 220],
-            dough: ["Тонке", "Традиційне"],
+            params: ["Тонке", "Традиційне"],
             image: doublePepperoni,
             id: 3
         },
@@ -42,7 +43,7 @@ let initialState = {
             name: "ПІЦА ХОТ-ДОГ",
             size: ["20см", "30см", "50см"],
             price: [128, 160, 225],
-            dough: ["Тонке", "Традиційне"],
+            params: ["Тонке", "Традиційне"],
             image: hotDog,
             id: 4
         },
@@ -50,7 +51,7 @@ let initialState = {
             name: "КАЛЬЦОНЕ АЛЬ ФОРНО",
             size: ["20см", "30см", "50см"],
             price: [99, 140, 210],
-            dough: ["Тонке", "Традиційне"],
+            params: ["Тонке", "Традиційне"],
             image: kalcone,
             id: 5
         },
@@ -58,7 +59,7 @@ let initialState = {
             name: "ГРИБОЧОК",
             size: ["20см", "30см", "50см"],
             price: [53, 65, 90],
-            dough: ["Тонке", "Традиційне"],
+            params: ["Тонке", "Традиційне"],
             image: mushrooms,
             id: 6
         },
@@ -66,7 +67,7 @@ let initialState = {
             name: "КАРБОНАРА",
             size: ["20см", "30см", "50см"],
             price: [96, 140, 189],
-            dough: ["Тонке", "Традиційне"],
+            params: ["Тонке", "Традиційне"],
             image: korbonara,
             id: 7
         },
@@ -74,12 +75,14 @@ let initialState = {
             name: "КАПРИЧОЗА",
             size: ["20см", "30см", "50см"],
             price: [99, 130, 170],
-            dough: ["Тонке", "Традиційне"],
+            params: ["Тонке", "Традиційне"],
             image: kaprichoza,
             id: 8
         }
     ],
-    shoppingCart: []
+    shoppingCart: [],
+    GoodsIsFetching: false
+    
 }
 
 const PizzaReducer = (state = initialState, action) => {
@@ -96,7 +99,6 @@ const PizzaReducer = (state = initialState, action) => {
                     if (item.id === action.payloads.id
                         && item.size === action.payloads.size
                         && item.params === action.payloads.params
-                        && item.id === action.payloads.id
                     ) {
                         let addCount = item
                         addCount.count++
@@ -112,7 +114,6 @@ const PizzaReducer = (state = initialState, action) => {
                     if (item.id === action.payloads.id
                         && item.params === action.payloads.params
                         && item.size === action.payloads.size
-                        && item.id === action.payloads.id
                     ) {
                         let addCount = item
                         addCount.count--
@@ -128,11 +129,15 @@ const PizzaReducer = (state = initialState, action) => {
                 shoppingCart: [...state.shoppingCart]
             }
         case SET_CLEAR_SHOPPING_CART_ITEMS:
-            state.shoppingCart.splice(0, state.shoppingCart.length)
             return {
                 ...state,
-                shoppingCart: [...state.shoppingCart]
+                shoppingCart: []
             }
+        case SET_GOODS_IS_FETCHING: 
+        return {
+            ...state,
+            GoodsIsFetching: action.payloads
+        }
         default:
             return state
     }
@@ -143,6 +148,7 @@ export const setShoppingCartItemsCount = (payloads) => ({ type: SET_SHOPPING_CAR
 export const setShoppingCartItemsDecrementCount = (payloads) => ({ type: SET_SHOPPING_CART_ITEMS_DECREMENT_COUNT, payloads })
 export const setShoppingCartItemsDeleter = (payloads) => ({ type: SET_SHOPPING_CART_ITEMS_DELETER, payloads })
 export const setClearShoppingCartItems = (payloads) => ({ type: SET_CLEAR_SHOPPING_CART_ITEMS, payloads })
+export const setGoodsIsFetching =(payloads) => ({type: SET_GOODS_IS_FETCHING, payloads})
 
 export const ShoppingCartItems = (item) => (dispatch, getState) => {
     const state = getState().pizzaItems.shoppingCart
@@ -156,10 +162,10 @@ export const ShoppingCartItems = (item) => (dispatch, getState) => {
         && i.size === item.size
         && i.id === item.id
     )
-    if (!paramsSelectedMatched) {
-        dispatch(setShoppingCartItems(item))
-    } else {
+    if (paramsSelectedMatched) {
         dispatch(setShoppingCartItemsCount(matchedItem))
+    } else {
+        dispatch(setShoppingCartItems(item))
     }
 }
 export const ShoppingCartItemsIncrement = (item) => (dispatch) => {
@@ -174,5 +180,7 @@ export const ShoppingCartItemsDeleter = (index) => (dispatch) => {
 export const ClearShoppingCartItems = () => (dispatch) => {
     dispatch(setClearShoppingCartItems())
 }
-
+export const GoodsIsFetchingThunk = (boolean) => (dispatch) => {
+    dispatch(setGoodsIsFetching(boolean))
+}
 export default PizzaReducer;

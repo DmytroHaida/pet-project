@@ -6,9 +6,7 @@ import { useSelector } from "react-redux";
 function Header() {
     const cartItems = useSelector(state => state.pizzaItems.shoppingCart)
     let count = 0
-    for (let i = 0; i < cartItems.length; i++) {
-        count += cartItems[i].count
-    }
+    cartItems.forEach(el => count += el.count)
     return (
         <header className="container">
             <div className="header">
